@@ -14,8 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+api_patterns = [
+    path('user/', include('green_medic.apps.users.urls', namespace="user")),
+    path('medicines/', include('green_medic.apps.medicines.urls', namespace="medicine")),
+
+]
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(
+        "api/",
+        include(arg=(api_patterns, "green_medic_apis"), namespace="api"),
+    ),
 ]

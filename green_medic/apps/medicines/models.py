@@ -13,5 +13,9 @@ class Medicine(TimeStampedModel):
     use_for = models.CharField(max_length=50, blank=True, null=True)
     dar = models.CharField(max_length=100, blank=True, null=True)
 
+    @property
+    def similar_medicines(self):
+        return Medicine.objects.filter(generic_name=self.generic_name)
+
     def __str__(self):
         return f"{self.manufacturer}, {self.brand_name}"

@@ -1,0 +1,70 @@
+from django.db import transaction
+from rest_framework import serializers
+from django.contrib.auth.models import User
+
+from green_medic.apps.users.models import Customer, Shopkeeper
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+            # 'password',
+        ]
+        # extra_kwargs = {
+        #     'password': {'write_only': True}
+        # }
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Customer
+        fields = [
+            'id',
+            'user',
+            'fcm_token',
+            'name',
+            'age',
+            'gender',
+            'lat',
+            'long',
+        ]
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        with transaction.atomic():
+            user = User.objects.create(**user_data)
+            customer = Customer.objects.create(**validated_data, user=user)
+        return customer
+
+
+class ShopkeeperSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = Shopkeeper
+        fields = [
+            'id',
+            'user',
+            'fcm_token',
+            'name',
+            'shop_name',
+            'address',
+            'lat',
+            'long',
+            'registration_number',
+            'nid',
+            'status',
+        ]
+        read_only_fields = ['status', ]
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        with transaction.atomic():
+            user = User.objects.create(**user_data)
+            shopkeeper = Shopkeeper.objects.create(**validated_data, user=user)
+        return shopkeeper

@@ -1,3 +1,15 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
+from green_medic.apps.users.choices import StatusTypes
+from green_medic.apps.users.models import Customer, Shopkeeper
+from green_medic.apps.users.serializers import CustomerSerializer, ShopkeeperSerializer
+
+
+class CustomerView(ModelViewSet):
+    serializer_class = CustomerSerializer
+    queryset = Customer.objects.all()
+
+
+class ShopkeeperView(ModelViewSet):
+    serializer_class = ShopkeeperSerializer
+    queryset = Shopkeeper.objects.filter(status=StatusTypes.APPROVED)

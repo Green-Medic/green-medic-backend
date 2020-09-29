@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,21 +28,26 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
+PROJECT_APPS = [
+    'green_medic.apps.users',
+    'green_medic.apps.medicines',
+]
 
-INSTALLED_APPS = [
+THIRD_PARTY_APPS = [
+    'rest_framework',
+    'django_filters',
+]
+
+SYSTEM_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-
-
-    'green_medic.apps.users',
-    'green_medic.apps.medicines',
-
 ]
+
+INSTALLED_APPS = SYSTEM_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
