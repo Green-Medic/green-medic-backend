@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 PROJECT_APPS = [
     'green_medic.apps.users',
     'green_medic.apps.medicines',
+    # 'green_medic.apps.orders'
 ]
 
 THIRD_PARTY_APPS = [

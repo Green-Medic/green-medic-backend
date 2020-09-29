@@ -9,6 +9,6 @@ class GenderTypes(IntegerChoices):
 
 
 class StatusTypes(IntegerChoices):
-    UNAPPROVED = 1
+    PENDING = 1
     APPROVED = 2
     DISABLED = 3

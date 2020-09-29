@@ -42,7 +42,7 @@ class Shopkeeper(TimeStampedModel):
     long = models.DecimalField(max_digits=9, decimal_places=6, default=0)
     registration_number = models.CharField(max_length=30, blank=True, null=True)
     nid = models.CharField(max_length=30, blank=True, null=True)
-    status = models.PositiveSmallIntegerField(choices=StatusTypes.choices, default=StatusTypes.UNAPPROVED)
+    status = models.PositiveSmallIntegerField(choices=StatusTypes.choices, default=StatusTypes.PENDING)
 
     def __str__(self):
         return f"{self.name}, {self.shop_name} {self.user.get_username()}"

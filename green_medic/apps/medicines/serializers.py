@@ -23,8 +23,7 @@ class MedicineRetrieveSerializer(serializers.ModelSerializer):
     similar_medicines = serializers.SerializerMethodField()
 
     def get_similar_medicines(self, medicine):
-        similar_medicines = Medicine.objects.filter(generic_name=medicine.generic_name)
-        serializer = MedicineListSerializer(instance=similar_medicines, many=True)
+        serializer = MedicineListSerializer(instance=medicine.similar_medicines, many=True)
         return serializer.data
 
     class Meta:
