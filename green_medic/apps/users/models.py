@@ -14,18 +14,7 @@ class Customer(TimeStampedModel):
     gender = models.PositiveSmallIntegerField(choices=GenderTypes.choices, default=GenderTypes.UNSPECIFIED)
     lat = models.DecimalField(max_digits=9, decimal_places=6, default=0)
     long = models.DecimalField(max_digits=9, decimal_places=6, default=0)
-
-    def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        self.user.password = self.fcm_token
-        self.user.save()
-        super().save(
-            force_insert=force_insert,
-            force_update=force_update,
-            using=using,
-            update_fields=update_fields,
-        )
+    address = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.name}, {self.user.get_username()}"

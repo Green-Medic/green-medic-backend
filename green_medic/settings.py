@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['*']
 PROJECT_APPS = [
     'green_medic.apps.users',
     'green_medic.apps.medicines',
-    # 'green_medic.apps.orders'
+    'green_medic.apps.orders'
 ]
 
 THIRD_PARTY_APPS = [
@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'green_medic.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'greenmedic',
+        'NAME': 'greenmedic2',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -133,3 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+}
