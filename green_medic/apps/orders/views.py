@@ -5,6 +5,7 @@ from green_medic.apps.medicines.pagination import SetPagination15
 from green_medic.apps.orders.filters import OrderFilter
 from green_medic.apps.orders.models import Order
 from green_medic.apps.orders.serializers import OrderSerializer
+from green_medic.apps.users.permissions import IsCustomer, IsShopkeeper
 
 
 class OrderListView(ListCreateAPIView):
@@ -13,9 +14,10 @@ class OrderListView(ListCreateAPIView):
     pagination_class = SetPagination15
     filter_backends = [DjangoFilterBackend]
     filter_class = OrderFilter
+    permission_classes = [IsCustomer | IsShopkeeper]
 
 
 class OrderRetrieveUpdateView(RetrieveUpdateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
-
+    permission_classes = [IsCustomer | IsShopkeeper]
