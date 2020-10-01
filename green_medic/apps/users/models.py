@@ -9,7 +9,7 @@ class Customer(TimeStampedModel):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     fcm_token = models.CharField(max_length=255, blank=True, null=True)
-    name = models.CharField(max_length=30, blank=False, null=False)
+    name = models.CharField(max_length=30, blank=True, null=True)
     age = models.PositiveSmallIntegerField(default=0)
     gender = models.PositiveSmallIntegerField(choices=GenderTypes.choices, default=GenderTypes.UNSPECIFIED)
     lat = models.DecimalField(max_digits=9, decimal_places=6, default=0)
@@ -24,7 +24,7 @@ class Shopkeeper(TimeStampedModel):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     fcm_token = models.CharField(max_length=255, blank=True, null=True)
-    name = models.CharField(max_length=30, blank=False, null=False)
+    name = models.CharField(max_length=30, blank=True, null=True)
     shop_name = models.CharField(max_length=30, blank=False, null=False)
     address = models.CharField(max_length=255, blank=False, null=False)
     lat = models.DecimalField(max_digits=9, decimal_places=6, default=0)

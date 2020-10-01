@@ -1,4 +1,5 @@
 from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from green_medic.apps.users.views import CustomerView, ShopkeeperView
 
@@ -27,6 +28,8 @@ shopkeeper_detail = ShopkeeperView.as_view({
 
 
 urlpatterns = [
+    path("token/", TokenObtainPairView.as_view(), name="token_pair"),
+
     path('customers/', customer_list, name='customer_list'),
     path('customers/<int:pk>/', customer_detail, name='customer_detail'),
 
