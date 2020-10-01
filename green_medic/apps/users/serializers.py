@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import transaction
-from drf_writable_nested import WritableNestedModelSerializer
 from rest_framework import serializers, status
-from django.contrib.auth.hashers import make_password
 
 from green_medic.apps.base.firebase.firebase import check_firebase_uid
 from green_medic.apps.users.models import Customer, Shopkeeper
@@ -21,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
 
-class CustomerSerializer(WritableNestedModelSerializer):
+class CustomerSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     class Meta:
@@ -48,7 +46,7 @@ class CustomerSerializer(WritableNestedModelSerializer):
         return customer
 
 
-class ShopkeeperSerializer(WritableNestedModelSerializer):
+class ShopkeeperSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     class Meta:
