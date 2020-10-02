@@ -9,5 +9,5 @@
 # # user = auth.get_users()
 #
 #
-# def check_firebase_uid(phone_number, uid):
-#     return True
+def check_firebase_uid(phone_number, uid):
+    return True
