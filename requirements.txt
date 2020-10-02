@@ -10,3 +10,4 @@ factory-boy==3.0.1
 pytest-django==3.10.0
 djangorestframework-simplejwt==4.4.0
 flake8==3.8.3
+drf-writable-nested==0.6.1
