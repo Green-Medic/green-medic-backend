@@ -1,4 +1,3 @@
-import datetime
 
 DEFAULT_SYSTEM_MESSAGE = {
     "System": "Welcome to Green Med. Here you can chat with the pharmacy shopkeeper",

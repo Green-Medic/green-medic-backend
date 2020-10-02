@@ -40,5 +40,3 @@ class MedicineRetrieveSerializer(serializers.ModelSerializer):
             'dar',
             'similar_medicines',
         ]
-
-

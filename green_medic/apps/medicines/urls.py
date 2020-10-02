@@ -6,7 +6,7 @@ app_name = 'medicine'
 
 
 urlpatterns = [
-    path('', MedicineListView.as_view(), name='customer_list'),
+    path('', MedicineListView.as_view(), name='medicines_list'),
     path('<int:pk>/', MedicineRetrieveView.as_view(), name='medicine_detail'),
 
 ]

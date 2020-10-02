@@ -17,9 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 api_patterns = [
-    path('user/', include('green_medic.apps.users.urls', namespace="user")),
-    path('medicines/', include('green_medic.apps.medicines.urls', namespace="medicine")),
-    path('orders/', include('green_medic.apps.orders.urls', namespace="order")),
+    path('users/', include('green_medic.apps.users.urls', namespace="users")),
+    path('medicines/', include('green_medic.apps.medicines.urls', namespace="medicines")),
+    path('orders/', include('green_medic.apps.orders.urls', namespace="orders")),
 
 ]
 

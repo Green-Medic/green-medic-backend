@@ -13,7 +13,6 @@ def enable_db_access(db):
     pass
 
 
-
 @pytest.fixture
 def client():
     """
@@ -24,9 +23,9 @@ def client():
     return APIClient()
 
 
-@pytest.fixture
-def user():
-    return UserFactory(password=PASSWORD)
+# @pytest.fixture
+# def user():
+#     return UserFactory(password=PASSWORD)
 
 
 @pytest.fixture

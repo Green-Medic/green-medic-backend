@@ -5,6 +5,7 @@ from green_medic.apps.medicines.filters import MedicineFilter
 from green_medic.apps.medicines.models import Medicine
 from green_medic.apps.medicines.pagination import SetPagination15
 from green_medic.apps.medicines.serializers import MedicineListSerializer, MedicineRetrieveSerializer
+from green_medic.apps.users.permissions import IsShopkeeperReadOnly, IsCustomerReadOnly
 
 
 class MedicineListView(ListAPIView):
@@ -13,8 +14,10 @@ class MedicineListView(ListAPIView):
     pagination_class = SetPagination15
     filter_backends = [DjangoFilterBackend]
     filter_class = MedicineFilter
+    permission_classes = [IsShopkeeperReadOnly | IsCustomerReadOnly]
 
 
 class MedicineRetrieveView(RetrieveAPIView):
     serializer_class = MedicineRetrieveSerializer
     queryset = Medicine.objects.all()
+    permission_classes = [IsShopkeeperReadOnly | IsCustomerReadOnly]
