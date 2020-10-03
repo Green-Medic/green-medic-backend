@@ -21,21 +21,3 @@ def client():
     :return:
     """
     return APIClient()
-
-
-# @pytest.fixture
-# def user():
-#     return UserFactory(password=PASSWORD)
-
-
-@pytest.fixture
-def restaurant_superuser(user):
-    user.is_restaurant_superuser = True
-    user.save()
-    return user
-
-
-@pytest.fixture
-def auth_client(user, client):
-    client.force_authenticate(user)
-    return client

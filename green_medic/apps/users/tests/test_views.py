@@ -1,4 +1,6 @@
+from green_medic.apps.users.tests.factories import CustomerFactory
 
 
 def test_test():
-    assert True
+    customer = CustomerFactory()
+    assert customer.user.username
