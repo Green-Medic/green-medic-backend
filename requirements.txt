@@ -12,3 +12,4 @@ djangorestframework-simplejwt==4.4.0
 flake8==3.8.4
 drf-writable-nested==0.6.1
 python-decouple==3.3
+firebase-admin==4.4.0
