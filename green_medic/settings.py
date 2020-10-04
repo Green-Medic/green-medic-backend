@@ -146,5 +146,5 @@ REST_FRAMEWORK = {
     ],
 }
 
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'green_medic/apps/base/firebase/keys/green-medicine.json'
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '.env/keys/greenmedic-production.json'
 default_app = initialize_app()

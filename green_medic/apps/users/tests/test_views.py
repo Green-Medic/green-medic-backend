@@ -29,12 +29,11 @@ class TestCustomerCreate:
         assert response.status_code == status.HTTP_201_CREATED
         assert response.data.get('user', {}).get('username') == customer_data.get('user', {}).get('username')
 
-    @pytest.mark.skip(reason='This validation has not been implemented yet')
     def test_create_customer_failed(self, customer_data, customer_create_url, client):
         customer_data['user']['username'] = f"+{FuzzyInteger(low=10000000, high=9999999999).fuzz()}"
         customer_data['user']['password'] = Faker().password()
         response = client.post(customer_create_url, data=customer_data, format="json")
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_create_existing_customer(self, customer_data, customer_create_url, client):
         customer = CustomerFactory()
@@ -67,12 +66,11 @@ class TestShopkeeperCreate:
         assert response.data.get('shop_name') == shopkeeper_data.get('shop_name')
         assert response.data.get('status') == StatusTypes.PENDING
 
-    @pytest.mark.skip(reason='This validation has not been implemented yet')
     def test_create_shopkeeper_failed(self, shopkeeper_data, shopkeeper_create_url, client):
         shopkeeper_data['user']['username'] = f"+{FuzzyInteger(low=1000000, high=999999999).fuzz()}"
         shopkeeper_data['user']['password'] = Faker().password()
         response = client.post(shopkeeper_create_url, data=shopkeeper_data, format="json")
-        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_create_existing_shopkeeper(self, shopkeeper_data, shopkeeper_create_url, client):
         shopkeeper = ShopkeeperFactory()
