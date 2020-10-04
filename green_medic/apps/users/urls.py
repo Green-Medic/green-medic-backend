@@ -30,9 +30,9 @@ shopkeeper_detail = ShopkeeperView.as_view({
 urlpatterns = [
     path("token/", TokenObtainPairView.as_view(), name="token_pair"),
 
-    path('customers/', customer_list, name='customers_list'),
+    path('customers/', customer_list, name='customers_list_create'),
     path('customers/<int:pk>/', customer_detail, name='customer_detail'),
 
-    path('shopkeepers/', shopkeeper_list, name='shopkeepers_list'),
+    path('shopkeepers/', shopkeeper_list, name='shopkeepers_list_create'),
     path('shopkeepers/<int:pk>/', shopkeeper_detail, name='shopkeeper_detail'),
 ]

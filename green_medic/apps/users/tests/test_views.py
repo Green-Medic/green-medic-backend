@@ -1,6 +1,81 @@
-from green_medic.apps.users.tests.factories import CustomerFactory
+import pytest
+from django.urls import reverse
+from factory.fuzzy import FuzzyInteger
+from faker import Faker
+from rest_framework import status
+
+from green_medic.apps.users.choices import StatusTypes
+from green_medic.apps.users.tests.factories import \
+    firebase_customer, firebase_shopkeeper, CustomerFactory, ShopkeeperFactory
 
 
-def test_test():
-    customer = CustomerFactory()
-    assert customer.user.username
+class TestCustomerCreate:
+    @pytest.fixture
+    def customer_data(self):
+        data = {
+            'user': {
+                'username': firebase_customer.phone_number,
+                'password': firebase_customer.uid
+            }
+        }
+        return data
+
+    @pytest.fixture
+    def customer_create_url(self):
+        return reverse("api:users:customers_list_create")
+
+    def test_create_customer(self, customer_data, customer_create_url, client):
+        response = client.post(customer_create_url, data=customer_data, format="json")
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.data.get('user', {}).get('username') == customer_data.get('user', {}).get('username')
+
+    @pytest.mark.skip(reason='This validation has not been implemented yet')
+    def test_create_customer_failed(self, customer_data, customer_create_url, client):
+        customer_data['user']['username'] = f"+{FuzzyInteger(low=10000000, high=9999999999).fuzz()}"
+        customer_data['user']['password'] = Faker().password()
+        response = client.post(customer_create_url, data=customer_data, format="json")
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_create_existing_customer(self, customer_data, customer_create_url, client):
+        customer = CustomerFactory()
+        assert customer
+        response = client.post(customer_create_url, data=customer_data, format="json")
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+class TestShopkeeperCreate:
+    @pytest.fixture
+    def shopkeeper_data(self):
+        data = {
+            'user': {
+                'username': firebase_shopkeeper.phone_number,
+                'password': firebase_shopkeeper.uid,
+            },
+            'shop_name': Faker().company(),
+            'address': Faker().address()
+        }
+        return data
+
+    @pytest.fixture
+    def shopkeeper_create_url(self):
+        return reverse("api:users:shopkeepers_list_create")
+
+    def test_create_shopkeeper(self, shopkeeper_data, shopkeeper_create_url, client):
+        response = client.post(shopkeeper_create_url, data=shopkeeper_data, format="json")
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.data.get('user', {}).get('username') == shopkeeper_data.get('user', {}).get('username')
+        assert response.data.get('shop_name') == shopkeeper_data.get('shop_name')
+        assert response.data.get('status') == StatusTypes.PENDING
+
+    @pytest.mark.skip(reason='This validation has not been implemented yet')
+    def test_create_shopkeeper_failed(self, shopkeeper_data, shopkeeper_create_url, client):
+        shopkeeper_data['user']['username'] = f"+{FuzzyInteger(low=1000000, high=999999999).fuzz()}"
+        shopkeeper_data['user']['password'] = Faker().password()
+        response = client.post(shopkeeper_create_url, data=shopkeeper_data, format="json")
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_create_existing_shopkeeper(self, shopkeeper_data, shopkeeper_create_url, client):
+        shopkeeper = ShopkeeperFactory()
+        assert shopkeeper
+        response = client.post(shopkeeper_create_url, data=shopkeeper_data, format="json")
+        assert response.status_code == status.HTTP_400_BAD_REQUEST

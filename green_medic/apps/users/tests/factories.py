@@ -36,6 +36,8 @@ class CustomerFactory(DjangoModelFactory):
 
 class ShopkeeperFactory(DjangoModelFactory):
     user = factory.SubFactory(_ShopkeeperUserFactory)
+    shop_name = factory.Faker('company')
+    address = factory.Faker("street_address")
 
     class Meta:
         model = Shopkeeper
