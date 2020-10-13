@@ -39,7 +39,8 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: Green-Medic/.env
-        token: ${{ secrets.ENV_REPO_TOKEN }} # `GitHub_PAT` is a secret that contains your PAT
+        # Create a PAT for the desired private repo, Add the PAT to Parent repo's secret key.
+        token: ${{ secrets.ENV_REPO_TOKEN }} # `ENV_REPO_TOKEN` is a secret that containing my PAT
         path: .env
     - name: Run migrations
       run: |

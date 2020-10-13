@@ -11,7 +11,7 @@ firebase_customer = get_or_create_firebase_test_user(**TEST_CUSTOMER)
 firebase_shopkeeper = get_or_create_firebase_test_user(**TEST_SHOPKEEPER)
 
 
-class _CustomerUserFactory(DjangoModelFactory):
+class CustomerUserFactory(DjangoModelFactory):
     username = firebase_customer.phone_number
     password = firebase_customer.uid
 
@@ -19,7 +19,7 @@ class _CustomerUserFactory(DjangoModelFactory):
         model = User
 
 
-class _ShopkeeperUserFactory(DjangoModelFactory):
+class ShopkeeperUserFactory(DjangoModelFactory):
     username = firebase_shopkeeper.phone_number
     password = firebase_shopkeeper.uid
 
@@ -28,14 +28,14 @@ class _ShopkeeperUserFactory(DjangoModelFactory):
 
 
 class CustomerFactory(DjangoModelFactory):
-    user = factory.SubFactory(_CustomerUserFactory)
+    user = factory.SubFactory(CustomerUserFactory)
 
     class Meta:
         model = Customer
 
 
 class ShopkeeperFactory(DjangoModelFactory):
-    user = factory.SubFactory(_ShopkeeperUserFactory)
+    user = factory.SubFactory(ShopkeeperUserFactory)
     shop_name = factory.Faker('company')
     address = factory.Faker("street_address")
 
