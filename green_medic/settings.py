@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'green_medic.wsgi.application'
 
 DEFAULT_DATABASE = config(
     "DATABASE_URL",
-    default="postgres://green:green@db:5432/green",
+    default="postgres://green:green@localhost:5432/green",
     cast=dj_database_url.parse,
 )
 
