@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -88,17 +89,13 @@ WSGI_APPLICATION = 'green_medic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'greenmedic2',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+DEFAULT_DATABASE = config(
+    "DATABASE_URL",
+    default="postgres://green:green@db:5432/green",
+    cast=dj_database_url.parse,
+)
 
+DATABASES = {"default": DEFAULT_DATABASE}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -147,5 +144,4 @@ REST_FRAMEWORK = {
 }
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '.env/keys/greenmedic-production.json'
-# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '.env/keys/green_medicine.json'
 default_app = initialize_app()
