@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install git -y && apt-get install iputils-ping -y
 RUN pip install -r /app/requirements.txt --no-cache-dir
 
 COPY . /app
-#RUN useradd backend
-#RUN chown -R backend:backend /app
-#USER backend
+RUN useradd backend
+RUN chown -R backend:backend /app
+USER backend
 # RUN ./manage.py collectstatic --no-input

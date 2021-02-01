@@ -19,11 +19,13 @@ services:
       - ./media:/media
       - ./green-medic-backend:/app/green-medic-backend
     command: >
-      bash -c "python manage.py migrate &&
-               python manage.py runserver 0.0.0.0:8000"
+      bash -c "urlwait &&
+      ./manage.py migrate &&
+      ./manage.py runserver 0.0.0.0:8000"
 
     ports:
       - "8000:8000"
+    restart: always
 
   db:
     image: postgres:12
