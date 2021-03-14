@@ -7,7 +7,7 @@ from green_medic.apps.medicines.models import Medicine
 class MedicineFilter(FilterSet):
     def search_medicines(self, queryset, name, value):
         return self.queryset.filter(
-            Q(brand_name=value) | Q(generic_name=value)
+            Q(brand_name__icontains=value) | Q(generic_name__icontains=value)
         )
 
     brand_name = CharFilter(lookup_expr="icontains")
