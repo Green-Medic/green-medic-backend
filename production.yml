@@ -1,0 +1,40 @@
+version: "3"
+
+volumes:
+    db:
+
+services:
+  worker: &worker
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile
+    env_file:
+      - .env/django
+    depends_on:
+      - db
+
+  web:
+    <<: *worker
+    volumes:
+      - ./media:/media
+      - ./green_medic:/app/green_medic
+      - ./pytest.ini:/app/pytest.ini
+      - ./.flake8:/app/.flake8
+
+    command: >
+      bash -c "urlwait &&
+      ./manage.py migrate &&
+      gunicorn -w 1 --access-logfile=- --timeout=120 green_medic.wsgi:application --bind 0.0.0.0:8080"
+
+    ports:
+      - "8080:8080"
+    restart: always
+
+  db:
+    image: postgres:12
+    env_file:
+      - .env/postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata
